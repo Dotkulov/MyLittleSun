@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для тебя, моя зайка 💕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fce4ec 0%, #ffe0f0 40%, #ffd9e8 100%);
+            font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 182, 193, 0.25);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+            animation: particleMove 20s infinite linear;
+        }
+
+        @keyframes particleMove {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+        }
+
+        .app-container {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 60px;
+            box-shadow: 0 35px 70px rgba(255, 140, 170, 0.25), 0 20px 40px rgba(0,0,0,0.05), inset 0 0 0 2px rgba(255,255,255,0.7);
+            padding: 40px;
+            z-index: 10;
+            border: 1px solid rgba(255,255,255,0.6);
+            transition: all 0.4s ease;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #c44569, #e6678f, #f39c9c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-shadow: 5px 5px 15px rgba(255, 150, 180, 0.4);
+            animation: titleGlow 3s infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 5px #ffb3c6); }
+            100% { filter: drop-shadow(0 0 20px #ff99bb); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #a6426a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .subtitle i {
+            color: #ff80a5;
+            font-size: 1.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 30px rgba(230, 100, 140, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: 3px solid white;
+            aspect-ratio: 3/4;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .photo-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 60%, rgba(255,255,255,0.4));
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 35px 50px rgba(210, 80, 120, 0.4);
+        }
+
+        .photo-card:hover::before {
+            opacity: 1;
+        }
+
+        .photo-img {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: transform 0.7s ease;
+        }
+
+        .photo-card:hover .photo-img {
+            transform: scale(1.1);
+        }
+
+        .photo-caption {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+            color: #b34b71;
+            text-align: center;
+            font-size: 1rem;
+            border-top: 2px solid white;
+            z-index: 2;
+            position: relative;
+        }
+
+        .photo-caption i {
+            color: #ff85a8;
+            margin-right: 8px;
+            transition: transform 0.3s;
+        }
+
+        .photo-card:hover .photo-caption i {
+            transform: rotate(15deg) scale(1.2);
+        }
+
+        .quotes-section {
+            display: flex;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .quote-card {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 40px;
+            padding: 25px;
+            border: 2px solid white;
+            transition: 0.3s;
+        }
+
+        .quote-card:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-5px);
+        }
+
+        .quote-card i {
+            font-size: 2rem;
+            color: #ff88aa;
+            margin-bottom: 10px;
+        }
+
+        .quote-text {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #75465f;
+            line-height: 1.6;
+        }
+
+        .quote-author {
+            margin-top: 15px;
+            text-align: right;
+            font-weight: 600;
+            color: #b35b7c;
+        }
+
+        .timer-subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #a6426a;
+            margin: 30px 0 10px;
+            font-weight: 300;
+        }
+
+        .timer-subtitle i {
+            color: #ff80a5;
+            margin: 0 8px;
+        }
+
+        .timer-container {
+            background: rgba(255, 240, 245, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 100px;
+            padding: 25px 50px;
+            margin: 0 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            border: 2px solid white;
+            box-shadow: 0 10px 30px rgba(255,182,193,0.3);
+        }
+
+        .timer-item {
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .timer-number {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #c44569;
+            line-height: 1;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 2px 2px 15px rgba(255,255,255,0.8);
+        }
+
+        .timer-label {
+            font-size: 1.1rem;
+            color: #a15577;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            max-width: 85vw;
+            max-height: 80vh;
+            border-radius: 50px;
+            border: 6px solid white;
+            box-shadow: 0 40px 80px rgba(255, 150, 180, 0.6);
+            object-fit: contain;
+            background: #fff5f8;
+            padding: 8px;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            font-size: 5rem;
+            color: white;
+            cursor: pointer;
+            text-shadow: 0 0 30px hotpink;
+            transition: 0.2s;
+            line-height: 1;
+            z-index: 1001;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg) scale(1.2);
+            color: #ffc0cb;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #c1799b;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        @media (max-width: 1000px) {
+            .gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .app-container { padding: 20px; }
+            .header h1 { font-size: 2.8rem; }
+            .timer-number { font-size: 2.2rem; }
+            .timer-container { padding: 20px; gap: 15px; }
+            .close-modal { top: 15px; right: 25px; font-size: 4rem; }
+        }
+
+        @media (max-width: 450px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<div class="app-container">
+    <div class="header">
+        <h1>Моей единственной)</h1>
+    </div>
+
+    <div class="gallery" id="galleryContainer"></div>
+
+    <div class="quotes-section">
+        <div class="quote-card">
+            <i class="fas fa-quote-left"></i>
+            <div class="quote-text">Ты самое прекрасное, что случилось в моей жизни.</div>
+        </div>
+        <div class="quote-card">
+            <i class="fas fa-heart"></i>
+            <div class="quote-text"> Ты самое дорогое что у меня есть.</div>
+
+        </div>
+        <div class="quote-card">
+            <i class="fas fa-infinity"></i>
+            <div class="quote-text">Маленькая дурашка)</div>
+
+        </div>
+    </div>
+
+    <!-- Таймер с 6 февраля 22:46 -->
+    <div class="timer-subtitle">
+        <i class="far fa-clock"></i> С момента нашего знакомства прошло:<i class="far fa-clock"></i>
+    </div>
+    <div class="timer-container">
+        <div class="timer-item">
+            <div class="timer-number" id="days">00</div>
+            <div class="timer-label">дней</div>
+        </div>
+        <div class="timer-item">
+            <div class="timer-number" id="hours">00</div>
+            <div class="timer-label">часов</div>
+        </div>
+        <div class="timer-item">
+            <div class="timer-number" id="minutes">00</div>
+            <div class="timer-label">минут</div>
+        </div>
+        <div class="timer-item">
+            <div class="timer-number" id="seconds">00</div>
+            <div class="timer-label">секунд</div>
+        </div>
+    </div>
+</div>
+
+<div id="photoModal" class="modal">
+    <span class="close-modal" id="closeModalBtn">&times;</span>
+    <img class="modal-content" id="modalImage" src="" alt="Прекрасное фото">
+</div>
+
+<footer class="footer">
+    <i class="fas fa-heart" style="color:#ff4d6d;"></i> Создано с любовью специально для тебя) <i class="fas fa-heart" style="color:#ff4d6d;"></i>
+</footer>
+
+<script>
+    (function() {
+
+        const photoCount = 8;
+        const photos = [];
+
+        for (let i = 1; i <= photoCount; i++) {
+            photos.push({
+                url: `photo/${i}.jpg`,
+                caption: `Милашка на фото`
+            });
+        }
+        
+
+        function renderGallery() {
+            const gallery = document.getElementById('galleryContainer');
+            gallery.innerHTML = '';
+
+            photos.forEach((photo) => {
+                const card = document.createElement('div');
+                card.className = 'photo-card';
+
+                const imgDiv = document.createElement('div');
+                imgDiv.className = 'photo-img';
+                imgDiv.style.backgroundImage = `url('${photo.url}')`;
+
+                const captionDiv = document.createElement('div');
+                captionDiv.className = 'photo-caption';
+                captionDiv.innerHTML = `<i class="fas fa-camera"></i> ${photo.caption}`;
+
+                card.appendChild(imgDiv);
+                card.appendChild(captionDiv);
+
+                card.addEventListener('click', () => openModal(photo.url));
+                gallery.appendChild(card);
+            });
+        }
+
+        const modal = document.getElementById('photoModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeBtn = document.getElementById('closeModalBtn');
+
+        function openModal(src) {
+            modalImg.src = src;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        function updateTimer() {
+            // 6 февраля 2026 года, 22:46
+            const startDate = new Date(2026, 1, 6, 22, 46, 0);
+            const now = new Date();
+            const diff = now - startDate;
+
+            if (diff < 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        function createParticle() {
+            const container = document.getElementById('particles');
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const size = Math.random() * 15 + 5;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            
+            particle.style.background = `rgba(255, ${Math.floor(160 + Math.random() * 60)}, ${Math.floor(170 + Math.random() * 60)}, 0.25)`;
+            
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particle.style.animationDelay = (Math.random() * 5) + 's';
+            
+            container.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 20000);
+        }
+
+        for (let i = 0; i < 30; i++) {
+            setTimeout(createParticle, i * 200);
+        }
+
+        setInterval(createParticle, 2000);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
+                closeModal();
+            }
+        });
+
+        renderGallery();
+
+        console.log('Ожидаются фотографии в папке photo/ (1.jpg - 8.jpg)');
+    })();
+</script>
+</body>
+</html>
